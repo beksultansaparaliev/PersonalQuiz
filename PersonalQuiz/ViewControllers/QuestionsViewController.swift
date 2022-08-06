@@ -8,20 +8,20 @@
 import UIKit
 
 class QuestionsViewController: UIViewController {
-
-    @IBOutlet weak var questionLabel: UILabel!
-    @IBOutlet weak var questionProgressView: UIProgressView!
     
-    @IBOutlet weak var singleStackView: UIStackView!
+    @IBOutlet var questionLabel: UILabel!
+    @IBOutlet var questionProgressView: UIProgressView!
+    
+    @IBOutlet var singleStackView: UIStackView!
     @IBOutlet var singleButtons: [UIButton]!
     
-    @IBOutlet weak var multipleStackView: UIStackView!
+    @IBOutlet var multipleStackView: UIStackView!
     @IBOutlet var multipleLabels: [UILabel]!
     @IBOutlet var multipleSwitches: [UISwitch]!
     
-    @IBOutlet weak var rangedStackView: UIStackView!
+    @IBOutlet var rangedStackView: UIStackView!
     @IBOutlet var rangedLabels: [UILabel]!
-    @IBOutlet weak var rangedSlider: UISlider! {
+    @IBOutlet var rangedSlider: UISlider! {
         didSet {
             let answerCount = Float(currentAnswers.count - 1)
             rangedSlider.maximumValue = answerCount
@@ -35,7 +35,7 @@ class QuestionsViewController: UIViewController {
     private var currentAnswers: [Answer] {
         questions[questionIndex].answers
     }
-    
+     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
@@ -69,7 +69,7 @@ class QuestionsViewController: UIViewController {
     }
 }
 
-//MARK: - Private Methods
+// MARK: - Private Methods
 extension QuestionsViewController {
     private func updateUI() {
         // Hide stacks
@@ -80,21 +80,20 @@ extension QuestionsViewController {
         // Get current question
         let currentQuestion = questions[questionIndex]
         
-        // Set current label for questionLabel
+        // Set current question for questionLabel
         questionLabel.text = currentQuestion.title
         
         // Calculate progress
         let totalProgress = Float(questionIndex) / Float(questions.count)
         
-        // Set progress for progressView
+        // Set progress for questionProgressView
         questionProgressView.setProgress(totalProgress, animated: true)
         
-        // Set navigation title
+        // Set title
         title = "Вопрос № \(questionIndex + 1) из \(questions.count)"
         
         // Show stacks corresponding to question type
         showCurrentAnswers(for: currentQuestion.responseType)
-        
     }
     
     private func showCurrentAnswers(for type: ResponseType) {
@@ -113,7 +112,7 @@ extension QuestionsViewController {
         }
     }
     
-    private func showMultipleStackView(with answers: [Answer] ) {
+    private func showMultipleStackView(with answers: [Answer]) {
         multipleStackView.isHidden = false
         
         for (label, answer) in zip(multipleLabels, answers) {
@@ -139,4 +138,3 @@ extension QuestionsViewController {
         performSegue(withIdentifier: "showResult", sender: nil)
     }
 }
-
